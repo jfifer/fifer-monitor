@@ -3,7 +3,7 @@ require_once 'db/config.php';
 
 abstract class AbstractDataModel {
 
-   private $dbh_upenn = null;
+   private $dbh_portal = null;
 
    private $row_limit = 50;
 
@@ -15,25 +15,25 @@ abstract class AbstractDataModel {
       return $this->row_limit;
    }
    
-   function connect_upenn_db() {
+   function connect_portal_db() {
       // Establish a connection to the database server.
-      if($this->dbh_upenn == null) {
-         $this->dbh_upenn = mysqli_connect(DB_SERVER_UPENN, DB_USER_UPENN, DB_PASS_UPENN, DB_NAME_UPENN, DB_PORT_UPENN);
+      if($this->dbh_portal == null) {
+         $this->dbh_portal = mysqli_connect(DB_SERVER_PORTAL, DB_USER_PORTAL, DB_PASS_PORTAL, DB_NAME_PORTAL, DB_PORT_PORTAL);
          if (mysqli_connect_errno()) {
             $err_params = array();
-            $err_params['sql_error'] = mysqli_connect_error($this->dbh_upenn);
-            $err_params['db_host'] = DB_SERVER_UPENN;
-            $err_params['db_name'] = DB_NAME_UPENN;
+            $err_params['sql_error'] = mysqli_connect_error($this->dbh_portal);
+            $err_params['db_host'] = DB_SERVER_PORTAL;
+            $err_params['db_name'] = DB_NAME_PORTAL;
             return false;
          }
       }
       return true;
    }
-   function get_dbh_upenn() {
-      if($this->dbh_upenn == null) {
-         $this->connect_upenn_db();
+   function get_dbh_portal() {
+      if($this->dbh_portal == null) {
+         $this->connect_portal_db();
       }
-      return $this->dbh_upenn;
+      return $this->dbh_portal;
    }
    
    function convert_to_array2($dataResource) {
@@ -51,6 +51,6 @@ abstract class AbstractDataModel {
    }
    
    function last_insert_id() {
-        return $this->get_dbh_upenn()->insert_id;
+        return $this->get_dbh_portal()->insert_id;
     }
 };

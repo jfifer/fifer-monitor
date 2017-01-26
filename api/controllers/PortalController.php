@@ -2,16 +2,17 @@
 include_once 'AbstractController.php';
 
 class PortalController extends AbstractController {
-    public function postAction($request) {
-	return "bye";        
-    }
-    
-    public function putAction($request) {
-        
-    }
-    
     public function getAction($request) {
-	return "hi";        
+	if(isset($request->url_elements[2])) {
+		return "fuck";
+	} else {
+		$model = new PortalModel();
+		$data = $model->listServerGroups();
+	}
+	return $data;
+    }
+    
+    public function postAction($request) {     
     }
 }
 
